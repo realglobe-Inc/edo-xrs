@@ -1,0 +1,171 @@
+{
+  "id": "http://github.com/realglobe-Inc/edo-xrs/jsonschema/xapi_1.0.2/agent.json#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/agent"
+    },
+    {
+      "$ref": "#/definitions/group"
+    },
+    {
+      "$ref": "#/definitions/anongroup"
+    }
+  ],
+  "definitions": {
+    "irl": {
+      "type": "string"
+    },
+    "account": {
+      "type": "object",
+      "description": "An Account (oen of inverse functional identifier) defined by xAPI.",
+      "additionalProperties": false,
+      "properties": {
+        "homePage": {
+          "$ref": "#/definitions/irl"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "description": "An Agent defined by xAPI.",
+      "additionalProperties": false,
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "pattern": "^Agent$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "$ref": "#/definitions/account"
+        },
+        "mbox": {
+          "type": "string"
+        },
+        "mbox_sha1sum": {
+          "type": "string"
+        },
+        "openid": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "objectType",
+            "account"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "mbox"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "mbox_sha1sum"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "openid"
+          ]
+        }
+      ]
+    },
+    "anongroup": {
+      "type": "object",
+      "description": "An Anonymous Group defined by xAPI.",
+      "additionalProperties": false,
+      "required": [
+        "objectType",
+        "member"
+      ],
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "pattern": "^Group$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "member": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/agent"
+          }
+        }
+      }
+    },
+    "group": {
+      "type": "object",
+      "description": "An Group defined by xAPI.",
+      "additionalProperties": false,
+      "properties": {
+        "objectType": {
+          "type": "string",
+          "pattern": "^Group$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "member": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/agent"
+          }
+        },
+        "account": {
+          "$ref": "#/definitions/account"
+        },
+        "mbox": {
+          "type": "string"
+        },
+        "mbox_sha1sum": {
+          "type": "string"
+        },
+        "openid": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "objectType",
+            "account"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "mbox"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "mbox_sha1sum"
+          ]
+        },
+        {
+          "required": [
+            "objectType",
+            "openid"
+          ]
+        }
+      ]
+    }
+  }
+}

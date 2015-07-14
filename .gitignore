@@ -1,0 +1,11 @@
+gin-bin
+*.test
+*~
+*.swp
+*.out
+*#
+.vagrant
+
+# intellij
+*.iml
+.idea
