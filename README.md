@@ -128,5 +128,5 @@ Please contuct us if you are interested in this product.
 http://realglobe.jp/
 
 <a href="http://realglobe.jp">
-  <img src="http://realglobe.jp/img/rg-logo.png" width="300px" alt="Realglobe, Inc."/>
+  <img src="http://realglobe.jp/img/rg-logo.png" height="100" alt="Realglobe, Inc."/>
 </a>
