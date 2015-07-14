@@ -98,9 +98,9 @@ $ # 正常に終了すると, http://192.168.33.10:3000 にて xRS サーバー�
 * go, mongodb が実行可能な環境において, 以下のコマンドを入力
 
 ```sh
-$ mkdir edo-xrs; cd edo-lrs
+$ mkdir edo-xrs; cd edo-xrs
 $ export GOPATH=$PWD
-$ ./src/github.com/realglobe-Inc/edo-xrs/build.sh
+$ go get github.com/realglobe-Inc/edo-xrs
 $
 $ ./bin/edo-xrs
 $ # 正常に起動すると, http://127.0.0.1:3000 にて xRS サーバーが待機しています
