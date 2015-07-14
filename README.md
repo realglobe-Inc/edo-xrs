@@ -1,9 +1,9 @@
-# EDO xRS について
+# edo-xrs について
 
- EDO xRS is a store of experience record using [Experience API (aka, xAPI)](http://experienceapi.com/).   
+ edo-xrs is a store of experience record using [Experience API (aka, xAPI)](http://experienceapi.com/).   
 If you dont know what is xAPI, see [xAPI-Spec](https://github.com/adlnet/xAPI-Spec/) for detail.  
 
- EDO xRS (Experience Recored Store) は[米国ADL](http://www.adlnet.org/)が策定している 
+ edo-xrs (Experience Recored Store) は[米国ADL](http://www.adlnet.org/)が策定している 
 [Experience API (xAPI)](http://experienceapi.com/) を  
 使ったスケーラブルで高速なパーソナルレコード保管システムです。  
 本プロジェクトはパーソナルレコードフレームワーク [EDO](https://github.com/realglobe-Inc/edo) の一部として開発されています。
