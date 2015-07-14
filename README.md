@@ -13,10 +13,10 @@ If you dont know what is xAPI, see [xAPI-Spec](https://github.com/adlnet/xAPI-Sp
 [e-Learming Consortium Japan](http://www.elc.or.jp/) がその[仕様の日本語版を公開](https://github.com/elc-gh/xAPI-Spec_ja)しています。
 
 # 背景
- EDO xRS (Experience Record Store) は EDO において目指しているユーザーデータの  
+ edo-xrs (Experience Record Store) は EDO において目指しているユーザーデータの  
 シームレスな相互運用の目的の一部として, 個人から発生する様々なデータを  
 記録するためのプラットフォームとして開発されました。  
-EDO xRS は学習記録や健康/医療分野等, 膨大なデータを扱う必要があるため,  
+edo-xrs は学習記録や健康/医療分野等, 膨大なデータを扱う必要があるため,  
 ハイパフォーマンスなアプリケーションを目指して開発されています。
 
 # 利用方法
