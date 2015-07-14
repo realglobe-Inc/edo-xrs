@@ -38,7 +38,7 @@ edo-xrs は学習記録や健康/医療分野等, 膨大なデータを扱う必
 https://github.com/realglobe-Inc/edo-xrs/issues/1
 
 ### リクエストサンプル
- 本サーバーへリクエストを発行する例を以下に示す。
+ 本サーバーへのリクエスト発行例は次のとおりです。
 * sample.json
 ```json
 {
