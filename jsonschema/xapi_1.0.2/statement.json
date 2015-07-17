@@ -611,7 +611,12 @@
     },
     "extensions": {
       "type": "object",
-      "description": "An extension defined by xAPI."
+      "description": "An extension defined by xAPI",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([-a-z0-9\\+\\.])*:.*$": {
+        }
+      }
     }
   }
 }

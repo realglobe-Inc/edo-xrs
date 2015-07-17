@@ -222,7 +222,7 @@ var singleStatementWithLangMap = `
             },
             "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
             "interactionType": "likert",
-            "correctResponsePattern": [
+            "correctResponsesPattern": [
                 "likert_3"
             ],
             "scale": [
