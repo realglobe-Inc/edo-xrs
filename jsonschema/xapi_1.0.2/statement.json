@@ -134,11 +134,21 @@
     "duration": {
       "description": "An duration as defined by ISO 8601 Duration.",
       "anyOf": [
-        { "$ref": "#/definitions/durationOnly" },
-        { "$ref": "#/definitions/durationRangeDateDate" },
-        { "$ref": "#/definitions/durationRangeDateDuration" },
-        { "$ref": "#/definitions/durationRangeDurationDate" },
-        { "$ref": "#/definitions/durationRepeatingInterval" }
+        {
+          "$ref": "#/definitions/durationOnly"
+        },
+        {
+          "$ref": "#/definitions/durationRangeDateDate"
+        },
+        {
+          "$ref": "#/definitions/durationRangeDateDuration"
+        },
+        {
+          "$ref": "#/definitions/durationRangeDurationDate"
+        },
+        {
+          "$ref": "#/definitions/durationRepeatingInterval"
+        }
       ]
     },
     "durationOnly": {
@@ -375,7 +385,7 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/interactionComponents"
-              }               
+              }
             },
             "source": {
               "type": "array",
@@ -614,8 +624,7 @@
       "description": "An extension defined by xAPI",
       "additionalProperties": false,
       "patternProperties": {
-        "^[a-z]([-a-z0-9\\+\\.])*:.*$": {
-        }
+        "^[a-z]([-a-z0-9\\+\\.])*:.*$": {}
       }
     }
   }
