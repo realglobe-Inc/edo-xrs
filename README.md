@@ -86,7 +86,7 @@ $ curl -X GET -H 'X-Experience-API-Version: 1.0.2' http://127.0.0.1:3000/test/te
 * [mongodb (3.0.4)](http://mongodb.org)
 
 #### Vagrant
-* 仮想環境構築ツール, Vagrant を使った EDO LRS サーバーの立ち上げ方
+* 仮想環境構築ツール, Vagrant を使った EDO xRS サーバーの立ち上げ方
 * vagrant が入っている環境において, 以下のコマンドを入力
 
 ```sh

@@ -378,7 +378,7 @@ var postStatement03 = `
         "en-US": "simple statement"
       },
       "description": {
-        "en-US": "A simple Experience API statement. Note that the LRS does not need to have any prior information about the Actor (learner), the verb, ro the Activity\/object."
+        "en-US": "A simple Experience API statement. Note that the xRS does not need to have any prior information about the Actor (learner), the verb, ro the Activity\/object."
       }
     }
   }

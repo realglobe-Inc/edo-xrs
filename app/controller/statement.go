@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	logger = rglog.Logger("LRS/statement")
+	logger = rglog.Logger("xRS/statement")
 )
 
 // Controller stores the local configuration of controller.

@@ -31,7 +31,7 @@ import (
 )
 
 var (
-	logger = rglog.Logger("LRS/main")
+	logger = rglog.Logger("xRS/main")
 )
 
 var configFile string
@@ -69,7 +69,7 @@ func main() {
 	c := controller.New(session)
 
 	router := martini.Classic()
-	router.Get("/", func() string { return "Welcome to LRS API Server." })
+	router.Get("/", func() string { return "Welcome to xRS API Server." })
 
 	// CROS support
 	router.Options("**", func(params martini.Params, w http.ResponseWriter) {
