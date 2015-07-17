@@ -83,9 +83,11 @@ func trimSuffix(s, suffix string) string {
 	return s
 }
 
-func getStatementAndHeader(t *testing.T, mart *martini.ClassicMartini, v *url.Values) ([]byte, http.Header) {
+func getStatementWithHeader(t *testing.T, mart *martini.ClassicMartini, v *url.Values) ([]byte, http.Header) {
 	resp := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/test/test/statements?"+v.Encode(), nil)
+	fatalIfError(t, err)
+
 	req.Header.Add("X-Experience-API-Version", "1.0.2")
 	mart.ServeHTTP(resp, req)
 
@@ -100,7 +102,7 @@ func getStatementAndHeader(t *testing.T, mart *martini.ClassicMartini, v *url.Va
 }
 
 func getStatement(t *testing.T, mart *martini.ClassicMartini, v *url.Values) []byte {
-	body, _ := getStatementAndHeader(t, mart, v)
+	body, _ := getStatementWithHeader(t, mart, v)
 	return body
 }
 
@@ -821,7 +823,7 @@ func TestGetStatementWithFile(t *testing.T) {
 	v.Add("verb", verbID)
 	v.Add("attachments", "true")
 
-	resp, head := getStatementAndHeader(t, mart, v)
+	resp, head := getStatementWithHeader(t, mart, v)
 	mt, ps, err := mime.ParseMediaType(head.Get("Content-Type"))
 	fatalIfError(t, err)
 	boundary, ok := ps["boundary"]
@@ -992,5 +994,23 @@ func testGetMultStatementWithRelatedAgents(t *testing.T, agent map[string]interf
 	fatalIfError(t, err)
 	if id, ok := s1.Search("id").Data().(string); !ok || id != id2 {
 		t.Fatalf("Got invalid order of statement array")
+	}
+}
+
+func getStatementWithUnusedStatementID(t *testing.T) {
+	db := initDatabase(t)
+	defer db.Close()
+	mart := initHandler(db)
+
+	unusedStatementID := "ffffffff-ffff-ffff-ffff-ffffffffffff"
+
+	resp := httptest.NewRecorder()
+	req, err := http.NewRequest("GET", "/test/test/statements?statementId="+unusedStatementID, nil)
+	fatalIfError(t, err)
+	req.Header.Add("X-Experience-API-Version", "1.0.2")
+	mart.ServeHTTP(resp, req)
+
+	if got, expected := resp.Code, http.StatusNotFound; got != expected {
+		t.Fatalf("Expected %v response code from get statement(s); got %d", expected, got)
 	}
 }
