@@ -106,6 +106,9 @@ func (c *Controller) findSingleStatement(xAPIVersion, user, app string, params u
 
 	var document model.Document
 	err = col.Find(query).One(&document)
+	if err == mgo.ErrNotFound {
+		return http.StatusNotFound, "Statement Not Found"
+	}
 	if err != nil {
 		logger.Err("An unexpected error occured on find DB: ", err)
 		return http.StatusInternalServerError, "Internal Server Error"
