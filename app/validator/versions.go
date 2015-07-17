@@ -14,29 +14,34 @@
 
 package validator
 
+import (
+	"regexp"
+)
+
 // XAPIVersion is for specify version of xAPI.
 type XAPIVersion int
 
 const (
 	// XAPIVersionVoid indicates invalid XAPI version
 	XAPIVersionVoid XAPIVersion = iota
-	// XAPIVersion102 indicates xAPI version 1.0.2.
-	XAPIVersion102
+	// XAPIVersion10x indicates xAPI version 1.0.*.
+	XAPIVersion10x
 )
+
+var version10x = regexp.MustCompile(`^1\.0\.[0-9]+$`)
 
 // SupportedVersions returns all versions supported by this validator.
 func SupportedVersions() []XAPIVersion {
-	return []XAPIVersion{XAPIVersion102}
+	return []XAPIVersion{XAPIVersion10x}
 }
 
 // ToXAPIVersion converts XAPI version string to constant.
 func ToXAPIVersion(version string) XAPIVersion {
-	switch version {
-	case "1.0.2":
-		return XAPIVersion102
-	default:
-		return XAPIVersionVoid
+	if version10x.MatchString(version) {
+		return XAPIVersion10x
 	}
+
+	return XAPIVersionVoid
 }
 
 // IsValidXAPIVersion validates XAPI version string.

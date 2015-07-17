@@ -43,39 +43,39 @@ func GetXAPISchemaInstance() *XAPISchema {
 func init() {
 	var err error
 
-	var schemaPathV102 string
+	var schemaPathV10x string
 	gopath := os.Getenv("GOPATH")
 	if len(gopath) != 0 {
-		schemaPathV102 = gopath + "/src/github.com/realglobe-Inc/edo-xrs/jsonschema/xapi_1.0.2"
+		schemaPathV10x = gopath + "/src/github.com/realglobe-Inc/edo-xrs/jsonschema/xapi_1.0.2"
 	} else {
-		if schemaPathV102, err = filepath.Abs("jsonschema/xapi_1.0.2"); err != nil {
+		if schemaPathV10x, err = filepath.Abs("jsonschema/xapi_1.0.2"); err != nil {
 			logger.Err("Invalid schema-path given: ", err)
 			os.Exit(1)
 		}
 	}
 
 	// JSON Schema をロード
-	v102statement, err := readSchema(schemaPathV102 + "/statement.json")
+	v10xstatement, err := readSchema(schemaPathV10x + "/statement.json")
 	if err != nil {
 		logger.Err(err)
 		os.Exit(1)
 	}
-	v102agent, err := readSchema(schemaPathV102 + "/agent.json")
-	if err != nil {
-		logger.Err(err)
-		os.Exit(1)
-	}
-
-	v102langmap, err := readSchema(schemaPathV102 + "/langmap.json")
+	v10xagent, err := readSchema(schemaPathV10x + "/agent.json")
 	if err != nil {
 		logger.Err(err)
 		os.Exit(1)
 	}
 
-	(*schema)[XAPIVersion102] = map[string]*gojsonschema.Schema{
-		"statement": v102statement,
-		"agent":     v102agent,
-		"langmap":   v102langmap,
+	v10xlangmap, err := readSchema(schemaPathV10x + "/langmap.json")
+	if err != nil {
+		logger.Err(err)
+		os.Exit(1)
+	}
+
+	(*schema)[XAPIVersion10x] = map[string]*gojsonschema.Schema{
+		"statement": v10xstatement,
+		"agent":     v10xagent,
+		"langmap":   v10xlangmap,
 	}
 }
 

@@ -30,7 +30,7 @@ func IsUUID(text string) bool {
 func IsLangMap(langMap interface{}) bool {
 	schema := GetXAPISchemaInstance()
 
-	res, err := schema.Get(XAPIVersion102, "langmap").Validate(gojsonschema.NewGoLoader(langMap))
+	res, err := schema.Get(XAPIVersion10x, "langmap").Validate(gojsonschema.NewGoLoader(langMap))
 	if err != nil {
 		logger.Warn(err)
 		return false
