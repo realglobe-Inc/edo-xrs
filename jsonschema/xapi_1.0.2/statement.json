@@ -359,7 +359,7 @@
             "interactionType": {
               "type": "string"
             },
-            "correctResponsePattern": {
+            "correctResponsesPattern": {
               "type": "array",
               "items": {
                 "type": "string"
