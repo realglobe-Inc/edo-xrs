@@ -77,6 +77,13 @@ func main() {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "X-Experience-API-Version")
 	})
+	router.Get("/:user/:app/about", func(params martini.Params, w http.ResponseWriter) (int, string) {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "X-Experience-API-Version")
+
+		return http.StatusOK, `{"version": ["1.0.0", "1.0.1", "1.0.2"]}`
+	})
 	router.Put("/:user/:app/statements", c.StoreStatement)
 	router.Post("/:user/:app/statements", c.StoreMultStatement)
 	router.Get("/:user/:app/statements", acceptlang.Languages(), c.FindStatement)
