@@ -95,6 +95,8 @@ func (c *Controller) StoreStatement(params martini.Params, w http.ResponseWriter
 			return NewBadRequestErr("Timestamp must be of the form of RFC3339").Response()
 		}
 		timestamp = t
+	} else {
+		statement["timestamp"] = timestamp
 	}
 
 	if code, mess := c.insertIntoDB(xAPIVersion, user, app, model.DocumentSlice{
@@ -404,6 +406,8 @@ func parseStatementsAndGetIDs(version, user, app string, reqBody []interface{}) 
 				return nil, nil, fmt.Errorf("timestamp must be of the form of RFC3339")
 			}
 			timestamp = t
+		} else {
+			stmt["timestamp"] = timestamp
 		}
 
 		docs = append(docs, *model.NewDocument(version, user, app, timestamp, stmt))
