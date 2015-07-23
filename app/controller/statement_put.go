@@ -99,6 +99,15 @@ func (c *Controller) StoreStatement(params martini.Params, w http.ResponseWriter
 		statement["timestamp"] = timestamp
 	}
 
+	// authority フィールドの補完
+	statement["authority"] = bson.M{
+		"objectType": "Agent",
+		"account": bson.M{
+			"homePage": req.Header.Get(miscs.GlobalConfig.Authority.HomePageHeader),
+			"name":     req.Header.Get(miscs.GlobalConfig.Authority.NameHeader),
+		},
+	}
+
 	if code, mess := c.insertIntoDB(xAPIVersion, user, app, model.DocumentSlice{
 		*model.NewDocument(xAPIVersion, user, app, timestamp, statement),
 	}); code != http.StatusOK {
@@ -156,7 +165,16 @@ func (c *Controller) StoreMultStatement(params martini.Params, w http.ResponseWr
 		return NewBadRequestErr("Unexpected content hash given on attachment or multipart header").Response()
 	}
 
-	docs, insertedIDs, err := parseStatementsAndGetIDs(xAPIVersion, user, app, statements)
+	// authority を取得
+	authority := bson.M{
+		"objectType": "Agent",
+		"account": bson.M{
+			"homePage": req.Header.Get(miscs.GlobalConfig.Authority.HomePageHeader),
+			"name":     req.Header.Get(miscs.GlobalConfig.Authority.NameHeader),
+		},
+	}
+
+	docs, insertedIDs, err := parseStatementsAndGetIDs(xAPIVersion, user, app, statements, authority)
 	if err != nil {
 		return NewBadRequestErrF("Invalid statements: %s", err).Response()
 	}
@@ -379,7 +397,7 @@ func readBodyJSONOfArray(r io.Reader) ([]interface{}, error) {
 	return reqBody, nil
 }
 
-func parseStatementsAndGetIDs(version, user, app string, reqBody []interface{}) (model.DocumentSlice, []string, error) {
+func parseStatementsAndGetIDs(version, user, app string, reqBody []interface{}, authority bson.M) (model.DocumentSlice, []string, error) {
 	docs := make(model.DocumentSlice, 0, len(reqBody))
 	insertedIDs := make([]string, 0, len(reqBody))
 	currentTime := time.Now()
@@ -409,6 +427,9 @@ func parseStatementsAndGetIDs(version, user, app string, reqBody []interface{}) 
 		} else {
 			stmt["timestamp"] = timestamp
 		}
+
+		// authority フィールドの補完
+		stmt["authority"] = authority
 
 		docs = append(docs, *model.NewDocument(version, user, app, timestamp, stmt))
 		insertedIDs = append(insertedIDs, stmt["id"].(string))

@@ -34,11 +34,16 @@ type Config struct {
 	Quota struct {
 		UserMaxUsage int64
 	}
+	Authority struct {
+		HomePageHeader string
+		NameHeader     string
+	}
 }
 
 // GlobalConfig is entity of global config
 var GlobalConfig Config
 
+// InitConfig reads config file and set settings in it
 func InitConfig(filename string) {
 	if err := gcfg.ReadFileInto(&GlobalConfig, filename); err != nil {
 		log.Panic(err)

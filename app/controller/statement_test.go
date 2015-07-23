@@ -308,6 +308,62 @@ func TestPutStatementWithConflictID(t *testing.T) {
 	}
 }
 
+func TestPutStatementAndCheckAuthority(t *testing.T) {
+	m := martini.Classic()
+
+	sess, err := mgo.Dial(miscs.GlobalConfig.MongoDB.URL)
+	defer sess.Close()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+	c := New(sess)
+
+	m.Get("/:user/:app/statements", acceptlang.Languages(), c.FindStatement)
+	m.Put("/:user/:app/statements", c.StoreStatement)
+	stmt := singleStatement01
+
+	resp := httptest.NewRecorder()
+	statementID := uuid.NewV4().String()
+	req, _ := http.NewRequest("PUT",
+		"/test/test/statements?statementId="+statementID,
+		strings.NewReader(stmt),
+	)
+	req.Header.Add("X-Experience-API-Version", "1.0.2")
+	req.Header.Add("X-Edo-Ta-Id", "example-ta-id")
+	req.Header.Add("X-Edo-User-Id", "example-user-id")
+
+	m.ServeHTTP(resp, req)
+
+	if got, expected := resp.Code, http.StatusNoContent; got != expected {
+		t.Fatalf("Expected %v response code from put single statement; got %d", expected, got)
+	}
+
+	resp2 := httptest.NewRecorder()
+	req2, _ := http.NewRequest("GET", "/test/test/statements?statementId="+statementID, nil)
+	req2.Header.Add("X-Experience-API-Version", "1.0.2")
+
+	m.ServeHTTP(resp2, req2)
+
+	if got, expected := resp2.Code, http.StatusOK; got != expected {
+		t.Fatalf("Expected %v response code from get single statement; got %d", expected, got)
+	}
+
+	body, err := ioutil.ReadAll(resp2.Body)
+	fatalIfError(t, err)
+
+	rstmt, err := gabs.ParseJSON(body)
+	fatalIfError(t, err)
+
+	v, ok := rstmt.Path("authority.account.homePage").Data().(string)
+	if !ok || v != "example-ta-id" {
+		t.Fatal("Field authority.account.homePage is invalid or not found in get response")
+	}
+	v, ok = rstmt.Path("authority.account.name").Data().(string)
+	if !ok || v != "example-user-id" {
+		t.Fatal("Field authority.account.name is invalid or not found in get response")
+	}
+}
+
 var postStatement01 = `
 [
   {
