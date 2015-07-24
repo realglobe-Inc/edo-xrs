@@ -18,6 +18,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -25,8 +26,6 @@ import (
 	"net/url"
 	"strconv"
 	"time"
-
-	"fmt"
 
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/acceptlang"
@@ -59,6 +58,23 @@ func (c *Controller) FindStatement(params martini.Params,
 
 	// otherwise find multiple statments
 	return c.findMultipleStatements(xAPIVersion, user, app, languages, urlParams, w)
+}
+
+// FindStatementHead handles request of get meta information
+func (c *Controller) FindStatementHead(params martini.Params,
+	languages acceptlang.AcceptLanguages, w http.ResponseWriter, req *http.Request) (int, string) {
+
+	// check version of xAPI
+	xAPIVersion := req.Header.Get("X-Experience-API-Version")
+	if !validator.IsValidXAPIVersion(xAPIVersion) {
+		return NewBadRequestErr("Invalid or empty xAPI version given in X-Experience-API-Version").Response()
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("X-Experience-API-Version", "1.0.2")
+	w.Header().Set("Content-Type", "application/json")  // BUG: this header is wrong when attachments given
+
+	return http.StatusOK, ""
 }
 
 // findSingleStatement は単一のステートメントをレスポンスとして返す。

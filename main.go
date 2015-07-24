@@ -86,6 +86,7 @@ func main() {
 	})
 	router.Put("/:user/:app/statements", c.StoreStatement)
 	router.Post("/:user/:app/statements", c.StoreMultStatement)
+	router.Head("/:user/:app/statements", c.FindStatementHead)
 	router.Get("/:user/:app/statements", acceptlang.Languages(), c.FindStatement)
 
 	router.Run()
