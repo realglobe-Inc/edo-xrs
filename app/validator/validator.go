@@ -21,8 +21,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/miyazakijunichi/gojsonschema"
 	"github.com/realglobe-Inc/go-lib/rglog"
+	"github.com/realglobe-Inc/gojsonschema"
 )
 
 type XAPISchema map[XAPIVersion]map[string]*gojsonschema.Schema

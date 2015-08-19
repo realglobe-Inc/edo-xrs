@@ -17,7 +17,7 @@ package validator
 import (
 	"regexp"
 
-	"github.com/miyazakijunichi/gojsonschema"
+	"github.com/realglobe-Inc/gojsonschema"
 )
 
 var validUUID = regexp.MustCompile(`^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$`)
