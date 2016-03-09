@@ -17,7 +17,7 @@ package miscs
 import (
 	"log"
 
-	"code.google.com/p/gcfg"
+	"gopkg.in/gcfg.v1"
 )
 
 // Config represent a structure of global config
