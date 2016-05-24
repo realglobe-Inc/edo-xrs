@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  mongo:
+    image: mongo:3.3
+    ports:
+      - 27017
+    networks:
+      - net1
+
+  xrs:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    networks:
+      - net1
+
+networks:
+  net1:
+    driver: bridge
