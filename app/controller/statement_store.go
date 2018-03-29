@@ -410,7 +410,8 @@ func parseStatementsAndGetIDs(version, user, app string, reqBody []interface{}, 
 
 		// ID 入っていなければ補完
 		if _, ok := stmt["id"]; !ok {
-			stmt["id"] = uuid.NewV4().String()
+			newId, _ := uuid.NewV4()
+			stmt["id"] = newId.String()
 		}
 
 		// タイムスタンプに関する処理
